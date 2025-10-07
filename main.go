@@ -7,21 +7,10 @@ import (
 	"net/http"
 
 	// 1. Import the Gorilla Mux package
+	"user-service-v2/model"
+
 	"github.com/gorilla/mux"
 )
-
-// The data model
-type User struct {
-	ID    string `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
-}
-
-// Sample database
-var users = map[string]User{
-	"1": {ID: "1", Name: "John Doe", Email: "john@example.com"},
-	"2": {ID: "2", Name: "Jane Smith", Email: "jane@example.com"},
-}
 
 // --- Handler Function (Using Mux) ---
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {
@@ -31,7 +20,7 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	userID := vars["id"] // We extract the variable named 'id'
 
 	// 2. Data Retrieval (The business logic remains the same)
-	user, ok := users[userID]
+	user, ok := model.Users[userID]
 	if !ok {
 		// Log and return HTTP 404
 		log.Printf("User ID %s not found in map", userID)
